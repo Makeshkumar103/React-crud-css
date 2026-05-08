@@ -37,7 +37,19 @@ npm install express mongoose cors dotenv nodemon
 npx nodemon server.js
 
 MongoDB Connected
+MONGO_URI=mongodb+srv://admin:admin123@cluster0.mongodb.net/formDB //,env
 Server running on port 5000
+React Form
+     ↓
+Axios POST Request
+     ↓
+Node.js Express API
+     ↓
+MongoDB Database
+     ↓
+Fetch Data from MongoDB
+     ↓
+Display in React Table
 
 cd client
 npm install axios
@@ -125,3 +137,4 @@ function App() {
 }
 
 export default App;
+
