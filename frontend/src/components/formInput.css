@@ -33,14 +33,23 @@
     border-radius: 5px;
     outline: none;
     transition: 0.3s ease;
-    background-color: #f8fafc;
+    /* background-color: #f8fafc; */
 }
-.flex input:focus {
-    /* color: white; */
-    /* background-color: gray; */
+/* .flex input:focus {
+    color: white;
+    background-color: gray;
     border-color: black;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+} */
+
+.btn-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
 }
+
 .btn {
     padding: 7px 18px;
     border: none;

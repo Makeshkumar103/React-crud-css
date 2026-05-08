@@ -1,6 +1,7 @@
 import './formInput.css';
 
-const FormInput = ({ details, handleChange, handleSubmit, editIndex }) => {
+const FormInput = ({ details, handleChange, handleSubmit, editIndex, setShowComponent }) => {
+  
 
   return (
     <>
@@ -25,9 +26,16 @@ const FormInput = ({ details, handleChange, handleSubmit, editIndex }) => {
             value={details.email}
             onChange={handleChange}
           />
-        <button type='submit' className='btn'>
+          <div className='btn-container'>
+          <button className='btn' onClick={() => setShowComponent(false)}>
+          Cancel
+          </button>
+          <button type='submit' className='btn' onClick={() => setShowComponent(true)}>
           {editIndex !== null ? 'Update' : 'Submit'}
-        </button>
+          {/* {setShowComponent(false)} */}
+        </button> 
+        </div>
+        
 
       </form>
     </div>

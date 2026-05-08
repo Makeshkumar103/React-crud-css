@@ -1,10 +1,12 @@
 import './table.css';
+const Table = ({ users, handleEdit, handleDelete, setShowComponent}) => {
 
-const Table = ({ users, handleEdit, handleDelete }) => {
   return (
     <>
     <div className='table-wrapper'>
-        <h2 className='h2'>List of Users</h2>
+      <div>
+        <h2 className='h2'>List of Record</h2>
+      </div>
          {users.length > 0 && (
           <table border="1" className='table'>
             <thead>
@@ -24,7 +26,9 @@ const Table = ({ users, handleEdit, handleDelete }) => {
                    <td className="action-buttons">
                     <button
                       className='edit-btn'
-                      onClick={() => handleEdit(item.id)}
+                      // onClick={() => handleEdit(item.id)}
+                      onClick={() => { handleEdit(item.id); setShowComponent(true); }}
+
                     >
                       Edit
                     </button>
@@ -43,6 +47,7 @@ const Table = ({ users, handleEdit, handleDelete }) => {
           </table>
         )}
         {users.length === 0 && <p>No users found.</p>}
+        {/* {users.length === 0 && (<FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex}/>  )} */}
 
     </div>
     </>

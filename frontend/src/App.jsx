@@ -8,6 +8,8 @@ function App() {
   const [details, setDetails] = useState({name:"", age:"", email:"", id:null});
   const [users, setUsers] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [showComponent, setShowComponent] = useState(false);
+  // const [list, setList] = useState(null);
 
   // const getAllUsers = async () => {
   //   try {
@@ -39,6 +41,7 @@ function App() {
   const resetForm = () => {
     setDetails({name:"", age:"", email:"", id:null});
     setEditIndex(null);
+    setShowComponent(false);
   };
 
   const handleSubmit = async (e) => {
@@ -89,19 +92,31 @@ function App() {
 
   const handleChange = (e) => {
     setDetails({...details,[e.target.name]:e.target.value});
+    // setShowComponent(false);
   };
 
   return (
-    <div className='conatiner mx-auto'>
+    <div className='container'>
       <div>
-        <h1 className='text-3xl font-bold text-center p-5'>Form</h1>
+        <h1>Form</h1>
+        <div className='btn-container'>
+          <button className='btn' onClick={() => setShowComponent(false)}>
+          Cancel
+          </button>
+          <button className='btn' onClick={() => setShowComponent(true)}>
+          + Add New
+          </button>
+        </div>
       </div>
+
       <div>
-        <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex}/>
+        {
+          showComponent !== true ? <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit} setShowComponent={setShowComponent}/> : <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex} setShowComponent={setShowComponent}/>
+        }
+        {/* <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit} />
+         {showComponent && <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex}/>} */}
       </div>
-      <div>
-        <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit}/>
-      </div>
+    
     </div>
   );
 }
