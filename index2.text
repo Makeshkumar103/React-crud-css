@@ -1,0 +1,94 @@
+require('dotenv').config();
+const express = require('express');
+const mysql = require('mysql2/promise');
+const cors = require('cors');
+
+const app = express();
+
+app.use(express.json());
+const port = process.env.SERVER_PORT || 8000;
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+});
+
+app.use(
+  cors({origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  })
+);
+
+app.get('/users', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [rows] = await connection.query('SELECT * FROM users');
+    connection.release();
+    return res.json(rows); 
+    console.log("Server is running");
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+app.delete('/users/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('DELETE FROM users WHERE id = ?', [id]);
+    connection.release();
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not delete user' });
+  }
+});
+
+app.post('/users', async (req, res) => {
+  try {
+    const { name, age, email } = req.body;
+    if (!name || !age || !email) {
+      return res.status(400).json({ error: 'Please fill in all fields' });
+    }
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('INSERT INTO users (name, age, email) VALUES (?, ?, ?)', [name, age, email]);
+    connection.release();
+    const newUser = { id: result.insertId, name, age, email };
+    return res.json(newUser);
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not save user' });
+  }
+});
+
+app.patch('/users/:id', async (req, res) => {
+  try {
+    const { name, age, email } = req.body;
+    const id = Number(req.params.id);
+    if (!name || !age || !email) {
+      return res.status(400).json({ error: 'Please fill in all fields' });
+    }
+    const connection = await pool.getConnection();
+    const [result] = await connection.query('UPDATE users SET name = ?, age = ?, email = ? WHERE id = ?', [name, age, email, id]);
+    connection.release();
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const updatedUser = { id, name, age, email };
+    return res.json(updatedUser);
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not update user' });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+  console.log('MySQL connection pool created successfully');
+});

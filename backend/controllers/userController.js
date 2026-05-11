@@ -1,0 +1,67 @@
+const userModel = require('../models/userModel');
+
+const validateUserData = ({ name, age, email }) => {
+  if (!name || !age || !email) {
+    return 'Please fill in all fields';
+  }
+  return null;
+};
+
+const getUsers = async (req, res) => {
+  try {
+    const users = await userModel.getAllUsers();
+    return res.json(users);
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch users' });
+  }
+};
+
+const createUser = async (req, res) => {
+  try {
+    const validationError = validateUserData(req.body);
+    if (validationError) {
+      return res.status(400).json({ error: validationError });
+    }
+    const newUser = await userModel.createUser(req.body);
+    return res.status(201).json(newUser);
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not save user' });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const validationError = validateUserData(req.body);
+    if (validationError) {
+      return res.status(400).json({ error: validationError });
+    }
+    const affectedRows = await userModel.updateUser(id, req.body);
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json({ id, ...req.body });
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not update user' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const affectedRows = await userModel.deleteUser(id);
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not delete user' });
+  }
+};
+
+module.exports = {
+  getUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+};
