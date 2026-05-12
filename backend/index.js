@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
-
+const pool = require('./config/db');
 const app = express();
 const port = process.env.SERVER_PORT || 8000;
 
@@ -18,4 +18,13 @@ app.use('/users', userRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+  console.log('Testing database connection...');
+  pool.getConnection()
+    .then((connection) => {
+      console.log('Connected to MySQL database');
+      connection.release();
+    })
+    .catch((error) => {
+      console.error('Error connecting to MySQL database:', error);
+    });
 });
