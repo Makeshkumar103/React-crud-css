@@ -16,7 +16,7 @@ CRUD flow
 
 The next level for you is:
 
-MVC architecture
+MVC architecture -- done on 12.05.2026
 Authentication (JWT)
 Environment separation
 Validation middleware

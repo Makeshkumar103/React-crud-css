@@ -1,0 +1,99 @@
+Reviewing backend files and architecture now.
+
+Found the core backend files. Now checking package metadata and setup notes for missing architecture details.
+
+Backend Architecture
+The backend is a small Express + MySQL API with a standard separation of concerns:
+
+index.js
+
+Entry point
+Loads environment variables with dotenv
+Configures Express middleware:
+express.json() for JSON body parsing
+cors() allowing http://localhost:5173
+Mounts routes at users
+Starts the HTTP server
+Tests the database connection once on startup
+db.js
+
+Creates a mysql2/promise connection pool
+Reads database settings from .env
+Exports the shared pool object for queries
+userRoutes.js
+
+Defines API routes for user CRUD operations
+Connects HTTP methods to controller actions:
+GET /users
+POST /users
+PATCH /users/:id
+DELETE /users/:id
+userController.js
+
+Handles HTTP request/response logic
+Validates input data
+Calls model functions
+Returns JSON responses and HTTP status codes
+Catches errors and sends 500 responses if needed
+userModel.js
+
+Encapsulates SQL database operations
+Uses the shared connection pool
+Implements:
+getAllUsers()
+createUser({ name, age, email })
+updateUser(id, { name, age, email })
+deleteUser(id)
+Project Flow
+Client sends a request from the frontend to http://localhost:8000/users
+index.js accepts the request and forwards it to the users router
+userRoutes.js maps the request to the appropriate controller method
+userController.js validates input and orchestrates business logic
+Controller calls userModel.js to run SQL queries
+userModel.js gets a connection from config/db.js pool and executes SQL
+Query results are returned up to the controller
+Controller sends JSON back to the frontend
+Data Flow Example
+GET /users
+
+Route -> getUsers
+Controller -> userModel.getAllUsers()
+SQL: SELECT * FROM users
+Response: list of users
+POST /users
+
+Route -> createUser
+Controller validates name, age, email
+Model inserts row into users
+Response: created user object with id
+PATCH /users/:id
+
+Route -> updateUser
+Controller validates payload
+Model updates row by id
+Response: updated user data or 404 if not found
+DELETE /users/:id
+
+Route -> deleteUser
+Model deletes row by id
+Response: success message or 404
+Configuration / Setup
+package.json
+
+Uses express, cors, dotenv, mysql2, nodemon
+npm start runs nodemon index.js
+SETUP.md
+
+Describes .env values:
+DB_HOST
+DB_PORT
+DB_USER
+DB_PASSWORD
+DB_NAME
+SERVER_PORT
+Describes how to create the MySQL database and run SQL from database.sql
+Summary
+This backend follows a classic:
+
+Route layer → Controller layer → Model layer → Database
+It is designed for a frontend on http://localhost:5173 and offers a REST-style CRUD API for a users table in MySQL.
