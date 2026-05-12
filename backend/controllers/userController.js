@@ -16,6 +16,15 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getProducts = async (req, res) => {
+  try {
+    const products = await userModel.getAllProducts();
+    return res.json(products);
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch products' });
+  }
+};
+
 const createUser = async (req, res) => {
   try {
     const validationError = validateUserData(req.body);
@@ -64,4 +73,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getProducts
 };

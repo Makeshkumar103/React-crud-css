@@ -17,6 +17,7 @@ app.use(
 );
 
 app.use('/users', userRoutes);
+app.use('/products', userRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

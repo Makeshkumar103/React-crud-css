@@ -1,10 +1,10 @@
 .table-wrapper{
     width: 100%;
     max-width: 1000px;
-    margin: 40px auto;
+    /* margin: 40px auto; */
     padding: 25px;
-    border-radius: 20px;
-    background: #ffffff;
+    /* border-radius: 20px; */
+    /* background: #ffffff; */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     /* background-color: aquamarine; */
     overflow-x: auto;

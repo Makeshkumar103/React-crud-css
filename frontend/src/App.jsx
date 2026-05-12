@@ -3,12 +3,17 @@ import axios from 'axios';
 import './App.css';
 import FormInput from './components/FormInput';
 import Table from './components/Table';
+import Product from './components/Product';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faBox } from '@fortawesome/free-solid-svg-icons';
+
 
 function App() {
   const [details, setDetails] = useState({name:"", age:"", email:"", id:null});
   const [users, setUsers] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
   const [showComponent, setShowComponent] = useState(false);
+  const [products, setProducts]= useState([]);
   // const [list, setList] = useState(null);
 
   // const getAllUsers = async () => {
@@ -36,6 +41,19 @@ function App() {
     };
 
     fetchUsers();
+  }, []);
+
+   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/products');
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   const resetForm = () => {
@@ -97,25 +115,41 @@ function App() {
 
   return (
     <div className='container'>
-      <div>
-        <h1>Form</h1>
-        <div className='btn-container'>
+      <div className='header'>        
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div className='in-container'>
+        <div className='nav'>  
+          <ul>
+            <li><FontAwesomeIcon icon={ faUser} />Customers</li>
+            <li><FontAwesomeIcon icon={ faBox } />Product</li>
+            <li>Order</li>
+            {/* <li><FaInfoCircle />About</li> */}
+          </ul>
           {/* <button className='btn' onClick={() => setShowComponent(false)}>
           Cancel
-          </button> */}
+          </button>
           <button className='btn' onClick={() => setShowComponent(true)}>
           + Add New
           </button>
+          <button className='btn' onClick={() => setShowComponent(true)}>
+            Product
+          </button> */}
         </div>
-      </div>
 
-      <div>
-        {
-          showComponent !== true ? <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit} setShowComponent={setShowComponent}/> : <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex} setShowComponent={setShowComponent}/>
-        }
-        {/* <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit} />
-         {showComponent && <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex}/>} */}
+        <div className='main'>
+              <button className='btn' onClick={() => setShowComponent(true)}>
+                + Add New
+              </button>
+              {
+            showComponent !== true ? <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit} setShowComponent={setShowComponent}/> : <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex} setShowComponent={setShowComponent}/>
+              }
+
+              <Product products={products}/>
+        </div>
+      
       </div>
+      
     
     </div>
   );

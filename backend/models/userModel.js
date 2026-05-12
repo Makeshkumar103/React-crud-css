@@ -7,6 +7,13 @@ const getAllUsers = async () => {
   return rows;
 };
 
+const getAllProducts = async () => {
+  const connection = await pool.getConnection();
+  const [rows] = await connection.query('SELECT * FROM products');
+  connection.release();
+  return rows;
+};
+
 const createUser = async ({ name, age, email }) => {
   const connection = await pool.getConnection();
   const [result] = await connection.query(
@@ -39,4 +46,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  getAllProducts
 };

@@ -28,3 +28,30 @@ INSERT INTO users (name, age, email) VALUES
 
 select * from users;
 
+
+
+USE crud;
+CREATE TABLE product (
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(30),
+price INT,
+pro_dec VARCHAR(200)
+);
+
+INSERT INTO products VALUES (
+
+);
+
+INSERT INTO product (name, price, pro_dec) VALUES
+('Wireless Mouse', 25, 'Ergonomic wireless mouse with USB receiver'),
+('Bluetooth Headphones', 80, 'Noise-cancelling over-ear Bluetooth headphones'),
+('USB-C Hub', 45, '7-in-1 USB-C hub with HDMI and SD card reader'),
+('Mechanical Keyboard', 120, 'RGB backlit mechanical keyboard with Cherry MX switches'),
+('Webcam HD', 60, '1080p HD webcam with built-in microphone'),
+('Laptop Stand', 35, 'Adjustable aluminum laptop stand for desk'),
+('Portable SSD', 100, '1TB external solid-state drive USB 3.0'),
+('Desk Lamp', 30, 'LED desk lamp with adjustable brightness levels'),
+('Monitor Arm', 70, 'Gas spring single monitor arm VESA compatible'),
+('Mouse Pad', 15, 'Large gaming mouse pad with stitched edges');
+
+SELECT * FROM product;
