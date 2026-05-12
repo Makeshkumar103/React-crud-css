@@ -100,9 +100,9 @@ function App() {
       <div>
         <h1>Form</h1>
         <div className='btn-container'>
-          <button className='btn' onClick={() => setShowComponent(false)}>
+          {/* <button className='btn' onClick={() => setShowComponent(false)}>
           Cancel
-          </button>
+          </button> */}
           <button className='btn' onClick={() => setShowComponent(true)}>
           + Add New
           </button>
