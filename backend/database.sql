@@ -38,7 +38,7 @@ price INT,
 pro_dec VARCHAR(200)
 );
 
-INSERT INTO products VALUES (
+INSERT INTO product VALUES (
 
 );
 

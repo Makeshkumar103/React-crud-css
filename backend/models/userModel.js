@@ -9,7 +9,7 @@ const getAllUsers = async () => {
 
 const getAllProducts = async () => {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM products');
+  const [rows] = await connection.query('SELECT * FROM product');
   connection.release();
   return rows;
 };

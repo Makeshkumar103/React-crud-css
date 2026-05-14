@@ -1,6 +1,7 @@
 import './table.css';
-const Table = ({ users, handleEdit, handleDelete, setShowComponent}) => {
 
+const Table = ({ users, handleEdit, handleDelete}) => {
+ 
   return (
     <>
     <div className='table-wrapper'>
@@ -26,8 +27,8 @@ const Table = ({ users, handleEdit, handleDelete, setShowComponent}) => {
                    <td className="action-buttons">
                     <button
                       className='edit-btn'
-                      // onClick={() => handleEdit(item.id)}
-                      onClick={() => { handleEdit(item.id); setShowComponent(true); }}
+                      onClick={() => handleEdit(item.id)}
+                      // onClick={() => { handleEdit(item.id); setShowComponent(true); }}
 
                     >
                       Edit

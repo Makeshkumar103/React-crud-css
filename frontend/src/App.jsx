@@ -1,35 +1,29 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
+
+
 import FormInput from './components/FormInput';
 import Table from './components/Table';
 import Product from './components/Product';
+// import Home from './components/Home';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBox } from '@fortawesome/free-solid-svg-icons';
-
+// import { Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   const [details, setDetails] = useState({name:"", age:"", email:"", id:null});
   const [users, setUsers] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
-  const [showComponent, setShowComponent] = useState(false);
+  // const [showComponent, setShowComponent] = useState(false);
   const [products, setProducts]= useState([]);
-  // const [list, setList] = useState(null);
 
-  // const getAllUsers = async () => {
-  //   try {
-  //     const response = await axios.get('http://localhost:8000/users');
-  //     setUsers(response.data);
-  //   } catch (error) {
-  //     console.error('Error fetching users:', error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getAllUsers();
-  // }, []);
-
-
+  const navigate = useNavigate();
+  
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -59,7 +53,7 @@ function App() {
   const resetForm = () => {
     setDetails({name:"", age:"", email:"", id:null});
     setEditIndex(null);
-    setShowComponent(false);
+    // setShowComponent(false);
   };
 
   const handleSubmit = async (e) => {
@@ -78,6 +72,9 @@ function App() {
         );
         setUsers(updatedData);
         resetForm();
+        // navigate('/');
+
+
       } catch (error) {
         console.error('Error updating user:', error);
       }
@@ -106,6 +103,8 @@ function App() {
     if (!user) return;
     setDetails(user);
     setEditIndex(id);
+    // onSubmitnav();
+    navigate('/forminput');
   };
 
   const handleChange = (e) => {
@@ -114,44 +113,48 @@ function App() {
   };
 
   return (
-    <div className='container'>
-      <div className='header'>        
-        <h1>Admin Dashboard</h1>
-      </div>
-      <div className='in-container'>
-        <div className='nav'>  
-          <ul>
-            <li><FontAwesomeIcon icon={ faUser} />Customers</li>
-            <li><FontAwesomeIcon icon={ faBox } />Product</li>
-            <li>Order</li>
-            {/* <li><FaInfoCircle />About</li> */}
-          </ul>
-          {/* <button className='btn' onClick={() => setShowComponent(false)}>
-          Cancel
-          </button>
-          <button className='btn' onClick={() => setShowComponent(true)}>
-          + Add New
-          </button>
-          <button className='btn' onClick={() => setShowComponent(true)}>
-            Product
-          </button> */}
+    <>
+        <div className='container'>
+            <div className='header'>        
+              <h1>Admin Dashboard</h1>
+            </div>
+            <div className='nav'>  
+              <ul>
+                <li><FontAwesomeIcon icon={ faUser} /><Link to='/forminput'>Customers</Link></li>
+                <li><FontAwesomeIcon icon={ faBox } /><Link to='/product'>Products</Link></li>
+                <li><FontAwesomeIcon icon={ faUser} /><Link to='/'>Table</Link></li>
+                {/* <li><FontAwesomeIcon icon={ faBox } />Order</li> */}
+              </ul>
+            </div>
+            <div className='main'>
+                  <button className='btn'>
+                    <Link to='/forminput'>+ Add New</Link>
+                  </button>
+                <Routes>
+                      {/* <Route 
+                        path='/'
+                        element={<Home />}
+                        /> */}
+                      <Route 
+                        path= '/product' 
+                        element={<Product products={products} /> 
+                        } />
+                      <Route 
+                      path= '/forminput' 
+                      element={<FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex} /> } />
+                      <Route 
+                      path= '/' 
+                      element={<Table users={users} handleDelete={handleDelete} handleEdit={handleEdit}/> } />
+                    </Routes>
+
+            </div>
         </div>
 
-        <div className='main'>
-              <button className='btn' onClick={() => setShowComponent(true)}>
-                + Add New
-              </button>
-              {
-            showComponent !== true ? <Table users={users} handleDelete={handleDelete} handleEdit={handleEdit} setShowComponent={setShowComponent}/> : <FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex} setShowComponent={setShowComponent}/>
-              }
-
-              <Product products={products}/>
-        </div>
-      
-      </div>
-      
+            
+                    
+                    
     
-    </div>
+    </>
   );
 }
 

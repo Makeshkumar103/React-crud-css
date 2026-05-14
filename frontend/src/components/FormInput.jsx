@@ -1,7 +1,10 @@
 import './formInput.css';
-
-const FormInput = ({ details, handleChange, handleSubmit, editIndex, setShowComponent }) => {
-  
+import { Link,useNavigate } from 'react-router-dom';
+const FormInput = ({ details, handleChange, handleSubmit, editIndex}) => {
+  const navigate = useNavigate();
+  function onSubmitnav() {
+    navigate('/')
+  }
 
   return (
     <>
@@ -27,13 +30,11 @@ const FormInput = ({ details, handleChange, handleSubmit, editIndex, setShowComp
             onChange={handleChange}
           />
           <div className='btn-container'>
-          <button className='btn' onClick={() => setShowComponent(false)}>
-          Cancel
-          </button>
-          <button type='submit' className='btn' onClick={() => setShowComponent(true)}>
-          {editIndex !== null ? 'Update' : 'Submit'}
-          {/* {setShowComponent(false)} */}
-        </button> 
+            <button className='btn'>  <Link to='/'>Cancel</Link></button>
+            <button type='submit' className='btn' onClick={onSubmitnav} >       {editIndex !== null ? 'Update' : 'Submit'}     </button>
+          {/* <button className='btn' onClick={() => setShowComponent(false)}>          Cancel           </button> */}
+          {/* <button type='submit' className='btn' onClick={() => setShowComponent(true) }>          {editIndex !== null ? 'Update' : 'Submit'}
+          {setShowComponent(false)}         </button> */}
         </div>
         
 
