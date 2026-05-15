@@ -1,5 +1,7 @@
 const userModel = require('../models/userModel');
 
+//user crud logic
+
 const validateUserData = ({ name, age, email }) => {
   if (!name || !age || !email) {
     return 'Please fill in all fields';
@@ -13,15 +15,6 @@ const getUsers = async (req, res) => {
     return res.json(users);
   } catch (error) {
     return res.status(500).json({ error: 'Failed to fetch users' });
-  }
-};
-
-const getProducts = async (req, res) => {
-  try {
-    const products = await userModel.getAllProducts();
-    return res.json(products);
-  } catch (error) {
-    return res.status(500).json({ error: 'Failed to fetch products' });
   }
 };
 
@@ -68,10 +61,60 @@ const deleteUser = async (req, res) => {
   }
 };
 
+//product crud logic
+
+const validateProductData = ({ name, price, description }) => {
+  if (!name || !price || !description) {
+    return 'Please fill in all fields';
+  }
+  return null;
+};
+
+const getProducts = async (req, res) => {
+  try {
+    const products = await userModel.getAllProducts();
+    return res.json(products);
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to fetch products' });
+  }
+};
+
+const createProduct = async (req, res) => {
+  try {
+    const validationError = validateProductData(req.body);
+    if (validationError) {
+      return res.status(400).json({ error: validationError})
+    }
+    const newProduct = await userModel.createProduct(req.body);
+    return res.status(201).json(newProduct);
+  } catch (error) {
+    return res.status(500).json({ error : 'Could not save product' });
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const validationError = validateUserData(req.body);
+    if (validationError) {
+      return res.status(400).json({ error: validationError });
+    }
+    const affectedRows = await userModel.updateUser(id, req.body);
+    if (affectedRows === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json({ id, ...req.body });
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not update product' });
+  }
+};
+
 module.exports = {
   getUsers,
   createUser,
   updateUser,
   deleteUser,
-  getProducts
+  getProducts, 
+  createProduct,
+  updateProduct
 };

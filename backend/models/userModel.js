@@ -1,15 +1,11 @@
 const pool = require('../config/db');
 
+
+// user form query
+
 const getAllUsers = async () => {
   const connection = await pool.getConnection();
   const [rows] = await connection.query('SELECT * FROM users');
-  connection.release();
-  return rows;
-};
-
-const getAllProducts = async () => {
-  const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM product');
   connection.release();
   return rows;
 };
@@ -41,10 +37,40 @@ const deleteUser = async (id) => {
   return result.affectedRows;
 };
 
+// product form query
+
+const getAllProducts = async () => {
+  const connection = await pool.getConnection();
+  const [rows] = await connection.query('SELECT * FROM product');
+  connection.release();
+  return rows;
+};
+
+const createProduct = async ({ name, price, description }) => {
+  const connection = await pool.getConnection();
+  const [result] = await connection.query(
+    'INSERT INTO products (name, price, description) VALUES (?, ?, ?)',
+    [name, price, description]
+  );
+  connection.release();
+  return { id: result.insertId, name, price, description };
+};
+
+const updateProduct = async (id, { name, price, description }) => {
+  const connection = await pool.getConnection();
+  const [result] = await connection.query(
+    'UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?',
+    [name, price, description, id]
+  );
+  connection.release();
+  return result.affectedRows;
+};
+
 module.exports = {
   getAllUsers,
   createUser,
   updateUser,
   deleteUser,
-  getAllProducts
+  getAllProducts,
+  createProduct
 };

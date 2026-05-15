@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+// import { setEditIndex } from './userSlice';
 
 const API_BASE_URL = 'http://localhost:8000';
 
@@ -16,8 +17,24 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+export const createProduct = createAsyncThunk(
+  'products/createProduct',
+  async (productDetails, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/products`, productDetails);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Error creating product');
+    }
+  }
+);
+
+
+
 const initialState = {
   products: [],
+  details: { name: '', price: '', description: '', id: null },
+  setEditIndex: null,
   loading: false,
   error: null,
 };
@@ -25,8 +42,24 @@ const initialState = {
 const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    setDetails: (state, action) => {
+      state.details = action.payload;
+    },
+    resetDetails: (state) => {
+      state.details = { name: '', age: '', de: '', id: null };
+      state.editIndex = null;
+    },
+    setEditIndex: (state, action) => {
+      state.editIndex = action.payload;
+    },
+    updateDetailsField: (state, action) => {
+      const { name, value } = action.payload;
+      state.details[name] = value;
+    },
+  },
   extraReducers: (builder) => {
+    // Fetch products
     builder.addCase(fetchProducts.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -39,7 +72,28 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+
+
+    // Create Product
+        builder.addCase(createProduct.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        });
+        builder.addCase(createProduct.fulfilled, (state, action) => {
+          state.loading = false;
+          state.products.push(action.payload);
+          state.details = { name: '', price: '', description: '', id: null };
+          state.setEditIndex = null;
+        });
+        builder.addCase(createProduct.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
   },
+
+
 });
 
+
+export const { setDetails, resetDetails, setEditIndex, updateDetailsField } = productSlice.actions;
 export default productSlice.reducer;

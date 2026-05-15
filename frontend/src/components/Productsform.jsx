@@ -1,27 +1,42 @@
 import { useDispatch } from 'react-redux';
 import './productform.css';
-import { useNavigate } from 'react-router-dom';
-import { updateDetailsField } from '../slices/userSlice';
-
+import { useNavigate, useSelector } from 'react-router-dom';
+import { createProduct,updateProduct } from '../slices/productSlice';
 
 
 const Productsform = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {details, editIndex, loading } = useSelector((state) => state.users);
+    const {details, editIndex, loading } = useSelector((state) => state.products);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        dispatch(updateDetailsField({ name, value }));
-    };
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     dispatch(updateDetailsField({ name, value }));
+    // };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if 
+        if (!details.name || !details.price || !details.description) {
+            alert("Please fill in all fields.");
+            return;
+        }
 
-    }
+        if (editIndex) {
+              await dispatch(updateProduct({ id: editIndex, details }));
+            } else {
+              await dispatch(createProduct(details));
+            }
+        
+            navigate('/');
+    };
+
+
+    // const handleCancel = () => {
+    //     dispatch(resetDetails());
+    //     navigate('/');
+    // };
 
   return (
     <>
@@ -33,22 +48,23 @@ const Productsform = () => {
                 name="product_name"
                 placeholder="Product Name"
                 value={"Keyboard"}
-                onChange={handleChange}
+                // onChange={handleChange}
             />
             <input type="number"
                 name="Price"
                 placeholder="$Price"
                 value={300}
-                onChange={handleChange}
+                // onChange={handleChange}
             />
             <input type="text" 
                 name="Description"
                 placeholder="Product Description"
                 value={"lorem ipsum dolor sime"}
-                onChange={handleChange}
+                // onChange={handleChange}
                 />
             <div className='btn-container'>
-            <button type='button' className='btn' onClick={handleCancel}>
+            {/* <button type='button' className='btn' onClick={handleCancel}> */}
+            <button>
               Cancel
             </button>
             <button type='submit' className='btn' >

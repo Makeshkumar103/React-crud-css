@@ -2,8 +2,13 @@ import './product.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+// import { useDispatch, useSelector } from 'react-redux';
+// import { deleteUser, setDetails, setEditIndex } from '../slices/userSlice';
+// import { useNavigate } from 'react-router-dom';
 
 const Product = () => {
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const { products } = useSelector((state) => state.products);
 
   if (!products || products.length === 0) {
