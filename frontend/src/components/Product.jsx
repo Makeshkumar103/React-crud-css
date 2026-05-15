@@ -1,13 +1,19 @@
 import './product.css';
+import { useSelector } from 'react-redux';
 
-const Product = ({products}) => {
-  if (!products || products.length === 0) return null;
+const Product = () => {
+  const { products } = useSelector((state) => state.products);
+
+  if (!products || products.length === 0) {
+    return (
+      <div className="product-card">
+        <p>No products found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="product-card">
-      {/* <div className="product-image-wrapper">
-        <img className="product-image" src={product.img} alt={product.name} />
-      </div> */}
        {products.length > 0 && (
           <table border="1">
             <thead>
@@ -25,17 +31,11 @@ const Product = ({products}) => {
                   <td>{item.price}</td>
                   <td>{item.pro_dec}</td>
                    <td>
-                    <button
-                      // onClick={() => handleEdit(item.id)}
-                      // onClick={() => { handleEdit(item.id); setShowComponent(true); }}
-
-                    >
+                    <button>
                       Edit
                     </button>
 
-                    <button
-                      // onClick={() => handleDelete(item.id)}
-                    >
+                    <button>
                       Delete
                     </button>
                   </td>
@@ -45,7 +45,6 @@ const Product = ({products}) => {
             </tbody>
           </table>
         )}
-        {products.length === 0 && <p>No products found.</p>}
 
     </div>
   );

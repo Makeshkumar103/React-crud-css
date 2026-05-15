@@ -1,7 +1,25 @@
 import './table.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, setDetails, setEditIndex } from '../slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
-const Table = ({ users, handleEdit, handleDelete}) => {
- 
+const Table = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { users } = useSelector((state) => state.users);
+
+  const handleEdit = (user) => {
+    dispatch(setDetails(user));
+    dispatch(setEditIndex(user.id));
+    navigate('/forminput');
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      dispatch(deleteUser(id));
+    }
+  };
+
   return (
     <>
     <div className='table-wrapper'>
@@ -27,9 +45,7 @@ const Table = ({ users, handleEdit, handleDelete}) => {
                    <td className="action-buttons">
                     <button
                       className='edit-btn'
-                      onClick={() => handleEdit(item.id)}
-                      // onClick={() => { handleEdit(item.id); setShowComponent(true); }}
-
+                      onClick={() => handleEdit(item)}
                     >
                       Edit
                     </button>
@@ -48,7 +64,6 @@ const Table = ({ users, handleEdit, handleDelete}) => {
           </table>
         )}
         {users.length === 0 && <p>No users found.</p>}
-        {/* {users.length === 0 && (<FormInput details={details} handleChange={handleChange} handleSubmit={handleSubmit} editIndex={editIndex}/>  )} */}
 
     </div>
     </>
