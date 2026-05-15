@@ -1,5 +1,7 @@
 import './product.css';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 const Product = () => {
   const { products } = useSelector((state) => state.products);
@@ -14,6 +16,9 @@ const Product = () => {
 
   return (
     <div className="product-card">
+      <button className='btn'>
+            <Link to='/productsform'>+ Add New</Link>
+        </button> 
        {products.length > 0 && (
           <table border="1">
             <thead>

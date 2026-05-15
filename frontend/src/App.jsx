@@ -13,6 +13,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 
 import { fetchUsers } from './slices/userSlice';
 import { fetchProducts as fetchProductsAction } from './slices/productSlice';
+import Productsform from './components/Productsform';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,34 +36,37 @@ function App() {
   return (
     <>
         <div className='container'>
-            <div className='header'>        
-              <h1>Admin Dashboard</h1>
-            </div>
-            <div className='nav'>  
-              <ul>
-                <li><FontAwesomeIcon icon={ faUser} /><Link to='/forminput'>Customers</Link></li>
-                <li><FontAwesomeIcon icon={ faBox } /><Link to='/product'>Products</Link></li>
-                <li><FontAwesomeIcon icon={ faUser} /><Link to='/'>Table</Link></li>
-              </ul>
-            </div>
-            <div className='main'>
-                  <button className='btn'>
-                    <Link to='/forminput'>+ Add New</Link>
-                  </button>  
-                <Routes>
-                      <Route 
-                        path= '/product' 
-                        element={<Product /> 
-                        } />
-                      <Route 
-                      path= '/forminput' 
-                      element={<FormInput /> } />
-                      <Route 
-                      path= '/' 
-                      element={<Table /> } />
-                    </Routes>
+        <h1 className='header'>Admin Dashboard</h1>
+          <div className='grid-container'>
+              {/* <h1 className='header'>Admin Dashboard</h1> */}
 
-            </div>
+              <div className='nav'>  
+                <ul>
+                  <li><FontAwesomeIcon icon={ faUser} /><Link to='/forminput'>Customers</Link></li>
+                  <li><FontAwesomeIcon icon={ faBox } /><Link to='/product'>Products</Link></li>
+                  <li><FontAwesomeIcon icon={ faUser} /><Link to='/'>Table</Link></li>
+                  <li><FontAwesomeIcon icon={ faBox} /><Link to='/productsform'>Product Input</Link></li>
+                </ul>
+              </div>
+
+              <div className='main'>
+                <Routes>
+                    <Route 
+                        path= '/product' 
+                        element={<Product /> } />
+                    <Route 
+                        path= '/forminput' 
+                        element={<FormInput /> } />
+                    <Route 
+                        path= '/' 
+                        element={<Table /> } />
+                    <Route
+                        path='/productsform'
+                        element={<Productsform /> } />
+
+                </Routes>
+              </div>
+          </div>
         </div>
     </>
   );

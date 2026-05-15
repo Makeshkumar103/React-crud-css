@@ -1,4 +1,6 @@
 import './table.css';
+import { Link } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, setDetails, setEditIndex } from '../slices/userSlice';
 import { useNavigate } from 'react-router-dom';
@@ -25,6 +27,9 @@ const Table = () => {
     <div className='table-wrapper'>
       <div>
         <h2 className='h2'>List of Record</h2>
+        <button className='btn'>
+            <Link to='/forminput'>+ Add New</Link>
+        </button> 
       </div>
          {users.length > 0 && (
           <table border="1" className='table'>
