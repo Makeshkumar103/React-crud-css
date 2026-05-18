@@ -29,12 +29,22 @@ export const createProduct = createAsyncThunk(
   }
 );
 
-
+export const updateProduct = createAsyncThunk(
+  'users/updateProduct',
+  async ({ id, details }, { rejectWithValue }) => {
+    try {
+      const response = await axios.patch(`${API_BASE_URL}/products/${id}`, details);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Error updating product');
+    }
+  }
+);
 
 const initialState = {
   products: [],
   details: { name: '', price: '', description: '', id: null },
-  setEditIndex: null,
+  editIndex: null,
   loading: false,
   error: null,
 };
@@ -47,7 +57,7 @@ const productSlice = createSlice({
       state.details = action.payload;
     },
     resetDetails: (state) => {
-      state.details = { name: '', age: '', de: '', id: null };
+      state.details = { name: '', age: '', description: '', id: null };
       state.editIndex = null;
     },
     setEditIndex: (state, action) => {
@@ -75,20 +85,48 @@ const productSlice = createSlice({
 
 
     // Create Product
-        builder.addCase(createProduct.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        });
-        builder.addCase(createProduct.fulfilled, (state, action) => {
-          state.loading = false;
-          state.products.push(action.payload);
-          state.details = { name: '', price: '', description: '', id: null };
-          state.setEditIndex = null;
-        });
-        builder.addCase(createProduct.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload;
-        });
+    builder.addCase(createProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(createProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products.push(action.payload);
+      state.details = { name: '', price: '', description: '', id: null };
+      state.editIndex = null;
+    });
+    builder.addCase(createProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+
+    // Update Product
+    builder.addCase(updateProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(updateProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      const index = state.products.findIndex((u) => u.id === action.payload.id);
+      if (index!== -1) {
+        state.products[index] = action.payload;
+      }
+      state.details = { name: '', price:'', description:'', id: null };
+      state.editIndex = null;
+    });
+    builder.addCase(updateProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    
+
+
+
+
+
+
+
   },
 
 

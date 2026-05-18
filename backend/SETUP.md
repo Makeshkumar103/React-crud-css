@@ -14,7 +14,7 @@
    DB_PORT=3306
    DB_USER=root
    DB_PASSWORD=your_password
-   DB_NAME=crud_app
+   DB_NAME=crud
    SERVER_PORT=8000
    ```
 

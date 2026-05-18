@@ -95,13 +95,13 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const id = Number(req.params.id);
-    const validationError = validateUserData(req.body);
+    const validationError = validateProductData(req.body);
     if (validationError) {
       return res.status(400).json({ error: validationError });
     }
-    const affectedRows = await userModel.updateUser(id, req.body);
+    const affectedRows = await userModel.updateProduct(id, req.body);
     if (affectedRows === 0) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'Product not found' });
     }
     return res.json({ id, ...req.body });
   } catch (error) {

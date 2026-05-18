@@ -41,7 +41,7 @@ const deleteUser = async (id) => {
 
 const getAllProducts = async () => {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT * FROM product');
+  const [rows] = await connection.query('SELECT id, name, price, pro_dec AS description FROM product');
   connection.release();
   return rows;
 };
@@ -49,7 +49,7 @@ const getAllProducts = async () => {
 const createProduct = async ({ name, price, description }) => {
   const connection = await pool.getConnection();
   const [result] = await connection.query(
-    'INSERT INTO products (name, price, description) VALUES (?, ?, ?)',
+    'INSERT INTO product (name, price, pro_dec) VALUES (?, ?, ?)',
     [name, price, description]
   );
   connection.release();
@@ -59,7 +59,7 @@ const createProduct = async ({ name, price, description }) => {
 const updateProduct = async (id, { name, price, description }) => {
   const connection = await pool.getConnection();
   const [result] = await connection.query(
-    'UPDATE products SET name = ?, price = ?, description = ? WHERE id = ?',
+    'UPDATE product SET name = ?, price = ?, pro_dec = ? WHERE id = ?',
     [name, price, description, id]
   );
   connection.release();
@@ -72,5 +72,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getAllProducts,
-  createProduct
+  createProduct,
+  updateProduct
 };
