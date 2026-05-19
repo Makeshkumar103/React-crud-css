@@ -109,6 +109,20 @@ const updateProduct = async (req, res) => {
   }
 };
 
+//single product
+const singleProduct = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const affectedRows = await userModel.singleProduct(id);
+    if (!affectedRows) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.json({ message: 'Single Product successfully' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not fetch the product' });
+  }
+};
+
 module.exports = {
   getUsers,
   createUser,
@@ -116,5 +130,6 @@ module.exports = {
   deleteUser,
   getProducts, 
   createProduct,
-  updateProduct
+  updateProduct,
+  singleProduct
 };

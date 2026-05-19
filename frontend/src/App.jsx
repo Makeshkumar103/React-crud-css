@@ -5,7 +5,7 @@ import './App.css';
 
 import FormInput from './components/formInput/FormInput';
 import Table from './components/table/Table';
-import Product from './components/Product';
+import Product from './components/product/Product';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBox } from '@fortawesome/free-solid-svg-icons';

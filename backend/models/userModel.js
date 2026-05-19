@@ -66,6 +66,26 @@ const updateProduct = async (id, { name, price, description }) => {
   return result.affectedRows;
 };
 
+//single product from query
+
+const singleProduct = async (id) => {
+  const connection = await pool.getConnection();
+  const [result] = await connection.query("SELECT * FROM products WHERE id = ?", [id]);
+  connection.release();
+  // return result;
+  return result[0];
+
+}
+
+// app.get("/products/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const product = await db.query(
+//     "SELECT * FROM products WHERE id = ?",
+//     [id]
+//   );
+//   res.json(product[0]);
+// });
+
 module.exports = {
   getAllUsers,
   createUser,
@@ -73,5 +93,6 @@ module.exports = {
   deleteUser,
   getAllProducts,
   createProduct,
-  updateProduct
+  updateProduct,
+  singleProduct
 };

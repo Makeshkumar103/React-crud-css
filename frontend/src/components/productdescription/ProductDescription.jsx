@@ -20,14 +20,14 @@ const ProductDescription = () => {
   return (
     <div className='disc-container'>
         {singleProduct.length > 0 ? (
-            singleProduct.map((item) => (
+            // singleProduct.map((item) => (
                
-                <div className='pdp' key={item.id}>
-                    <h2>{item.name}</h2>
-                    <p>{item.price}</p>
-                    <p>{item.description}</p>
+                <div className='pdp' key={singleProduct.id}>
+                    <h2>{singleProduct.name}</h2>
+                    <p>{singleProduct.price}</p>
+                    <p>{singleProduct.description}</p>
                 </div>
-            ))
+            // ))
       ): (<p>No Product Found</p>)}
     </div>
   )

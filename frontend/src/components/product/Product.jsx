@@ -1,7 +1,8 @@
 import './product.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { setDetails, setEditIndex } from '../slices/productSlice';
+// import { setDetails, setEditIndex } from '.../slices/productSlice';
+import { setDetails, setEditIndex } from '../../slices/userSlice'; 
 
 const Product = () => {
   const dispatch = useDispatch();
