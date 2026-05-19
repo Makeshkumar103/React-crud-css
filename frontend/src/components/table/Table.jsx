@@ -2,7 +2,7 @@ import './table.css';
 import { Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteUser, setDetails, setEditIndex } from '../slices/userSlice';
+import { deleteUser, setDetails, setEditIndex } from '../../slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 const Table = () => {
@@ -25,8 +25,8 @@ const Table = () => {
   return (
     <>
     <div className='table-wrapper'>
-      <div>
-        <h2 className='h2'>List of Record</h2>
+      <div className='table-header'>
+        <h2>List of Record</h2>
         <button className='btn'>
             <Link to='/forminput'>+ Add New</Link>
         </button> 

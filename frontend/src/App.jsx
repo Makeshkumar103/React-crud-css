@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import './App.css';
 
-import FormInput from './components/FormInput';
-import Table from './components/Table';
+import FormInput from './components/formInput/FormInput';
+import Table from './components/table/Table';
 import Product from './components/Product';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +13,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 
 import { fetchUsers } from './slices/userSlice';
 import { fetchProducts as fetchProductsAction } from './slices/productSlice';
-import Productsform from './components/Productsform';
+import Productsform from './components/productform/Productsform';
+import ProductDescription from './components/productdescription/ProductDescription'
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,8 @@ function App() {
                   <li><FontAwesomeIcon icon={ faBox } /><Link to='/product'>Products</Link></li>
                   <li><FontAwesomeIcon icon={ faUser} /><Link to='/'>Table</Link></li>
                   <li><FontAwesomeIcon icon={ faBox} /><Link to='/productsform'>Product Input</Link></li>
+                  <li><Link>Discription</Link></li>
+                
                 </ul>
               </div>
 
@@ -63,6 +66,9 @@ function App() {
                     <Route
                         path='/productsform'
                         element={<Productsform /> } />
+                    <Route
+                        path='/product/:id'
+                        element={<ProductDescription /> } />
 
                 </Routes>
               </div>

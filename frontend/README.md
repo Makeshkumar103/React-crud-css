@@ -25,4 +25,7 @@ react-icons
 react-router-dom
 
 npm i react-redux @reduxjs/toolkit
+
+// production dependencies
 npm i cloudinary 18.05.2026
+npm i multer body-parser 

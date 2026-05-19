@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './productform.css';
 import { useNavigate } from 'react-router-dom';
-import { createProduct, updateProduct, resetDetails, updateDetailsField } from '../slices/productSlice';
+import { createProduct, updateProduct, resetDetails, updateDetailsField } from '../../slices/productSlice';
 
 const Productsform = () => {
   const navigate = useNavigate();
@@ -28,12 +28,12 @@ const Productsform = () => {
       await dispatch(createProduct(details));
     }
 
-    navigate('/');
+    navigate('/product');
   };
 
   const handleCancel = () => {
     dispatch(resetDetails());
-    navigate('/');
+    navigate('/product');
   };
 
   // const handleImageUpload = (e) => {

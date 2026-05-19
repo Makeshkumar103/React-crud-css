@@ -33,7 +33,7 @@ const Product = () => {
         <Link to='/productsform'>+ Add New</Link>
       </button>
       {products.length > 0 && (
-        <table border="1">
+        <table border="1" className='table'>
           <thead>
             <tr>
               <th>Name</th>
@@ -48,11 +48,21 @@ const Product = () => {
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>{item.description || item.pro_dec}</td>
-                <td>
-                  <button type="button" onClick={() => handleEdit(item)}>
+                <td className='action-buttons'>
+                  <button type='button'
+                    className='btn'
+                    onClick={() => navigate(`/product/${item.id}`) }
+                  >
+                      open
+                    </button>
+                  <button type="button" 
+                    className='edit-btn'
+                    onClick={() => handleEdit(item)}>
                     Edit
                   </button>
-                  <button type="button">
+                  <button type="button"
+                    className='delete-btn'
+                  >
                     Delete
                   </button>
                 </td>

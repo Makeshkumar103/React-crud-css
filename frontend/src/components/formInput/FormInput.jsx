@@ -1,7 +1,7 @@
 import './formInput.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser, updateUser, resetDetails, updateDetailsField } from '../slices/userSlice';
+import { createUser, updateUser, resetDetails, updateDetailsField } from '../../slices/userSlice';
 
 const FormInput = () => {
   const navigate = useNavigate();

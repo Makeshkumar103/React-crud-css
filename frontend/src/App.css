@@ -57,6 +57,11 @@
     cursor: pointer;
     transition: 0.3s ease;
 }
+.nav ul li a{
+    /* list-style: none; */
+    text-decoration: none;   
+    color: #000;
+}
 
 .nav li svg{
     margin-right: 10px;
