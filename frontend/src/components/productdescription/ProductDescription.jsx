@@ -5,13 +5,13 @@ import { useSelector } from 'react-redux';
 
 
 const ProductDescription = () => {
-    // const dispatch = useDispatch();
     const {id} = useParams();
     const { products } = useSelector((state) => state.products);
+    console.log(products);
     const singleProduct = products.find(
     (item) => item.id === Number(id)
   );
-
+    console.log(singleProduct)
   if (!singleProduct) {
     return <h1>Product Not Found</h1>;
   }
@@ -19,16 +19,15 @@ const ProductDescription = () => {
 
   return (
     <div className='disc-container'>
-        {singleProduct.length > 0 ? (
-            // singleProduct.map((item) => (
-               
-                <div className='pdp' key={singleProduct.id}>
-                    <h2>{singleProduct.name}</h2>
-                    <p>{singleProduct.price}</p>
-                    <p>{singleProduct.description}</p>
-                </div>
-            // ))
-      ): (<p>No Product Found</p>)}
+      <div className='image'>
+          <img src="{item.image}" alt="" />
+      </div>               
+      <div className='pdp' key={singleProduct.id}>
+          <h2>{singleProduct.name}</h2>
+          <p>{singleProduct.price}</p>
+          <p>{singleProduct.description}</p>
+      </div>
+      <button>Buy</button>
     </div>
   )
 }

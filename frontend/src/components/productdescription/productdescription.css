@@ -1,11 +1,17 @@
 .disc-container {
+    width: 100%;
+    /* max-width: 700px; */
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: aqua;
 }
+.image{
+    width: 50%;
+    background-color: red;
+}
 .pdp {
-    width: 100%;
+    width: 50%;
     max-width: 1000px;
     /* margin: 40px auto; */
     padding: 25px;
