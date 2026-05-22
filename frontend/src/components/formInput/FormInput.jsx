@@ -39,7 +39,7 @@ const FormInput = () => {
   return (
     <>
       <div className='form-container'>
-        <h2 className='h2'>Register Form</h2>
+        <h2>Customer Form</h2>
         <form className='flex' onSubmit={handleSubmit}>
           <input
             name="name"
@@ -60,7 +60,7 @@ const FormInput = () => {
             onChange={handleChange}
           />
           <div className='btn-container'>
-            <button type='button' className='btn' onClick={handleCancel}>
+            <button type='button' className='btn btn-secondary' onClick={handleCancel}>
               Cancel
             </button>
             <button type='submit' className='btn' disabled={loading}>

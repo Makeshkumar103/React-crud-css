@@ -79,7 +79,7 @@ const Productsform = () => {
           /> */}
 
           <div className='btn-container'>
-            <button type='button' className='btn' onClick={handleCancel}>
+            <button type='button' className='btn btn-secondary' onClick={handleCancel}>
               Cancel
             </button>
             <button type='submit' className='btn' disabled={loading}>

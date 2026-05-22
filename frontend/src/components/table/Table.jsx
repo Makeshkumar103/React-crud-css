@@ -32,7 +32,7 @@ const Table = () => {
         </button> 
       </div>
          {users.length > 0 && (
-          <table border="1" className='table'>
+          <table className='table'>
             <thead>
               <tr>
                 <th>Name</th>
@@ -68,7 +68,7 @@ const Table = () => {
             </tbody>
           </table>
         )}
-        {users.length === 0 && <p>No users found.</p>}
+        {users.length === 0 && <p className="empty-state">No users found. Add your first customer to get started.</p>}
 
     </div>
     </>

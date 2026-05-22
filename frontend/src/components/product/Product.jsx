@@ -20,21 +20,18 @@ const Product = () => {
     navigate('/productsform');
   };
 
-  if (!products || products.length === 0) {
-    return (
-      <div className="product-card">
-        <p>No products found.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="product-card">
-      <button className='btn'>
-        <Link to='/productsform'>+ Add New</Link>
-      </button>
-      {products.length > 0 && (
-        <table border="1" className='table'>
+      <div className="table-header">
+        <h2>Products</h2>
+        <button className="btn">
+          <Link to="/productsform">+ Add New</Link>
+        </button>
+      </div>
+      {(!products || products.length === 0) ? (
+        <p className="empty-state">No products found. Add your first product to get started.</p>
+      ) : (
+        <table className="table">
           <thead>
             <tr>
               <th>Name</th>
@@ -50,12 +47,13 @@ const Product = () => {
                 <td>{item.price}</td>
                 <td>{item.description || item.pro_dec}</td>
                 <td className='action-buttons'>
-                  <button type='button'
-                    className='btn'
-                    onClick={() => navigate(`/product/${item.id}`) }
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => navigate(`/product/${item.id}`)}
                   >
-                      open
-                    </button>
+                    View
+                  </button>
                   <button type="button" 
                     className='edit-btn'
                     onClick={() => handleEdit(item)}>

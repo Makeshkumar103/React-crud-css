@@ -13,21 +13,18 @@ const ProductDescription = () => {
   );
     console.log(singleProduct)
   if (!singleProduct) {
-    return <h1>Product Not Found</h1>;
+    return <p className="not-found">Product not found.</p>;
   }
 
-
   return (
-    <div className='disc-container'>
-      <div className='image'>
-          <img src="{item.image}" alt="" />
-      </div>               
-      <div className='pdp' key={singleProduct.id}>
-          <h2>{singleProduct.name}</h2>
-          <p>{singleProduct.price}</p>
-          <p>{singleProduct.description}</p>
+    <div className="disc-container">
+      <div className="image" aria-hidden="true" />
+      <div className="pdp">
+        <h2>{singleProduct.name}</h2>
+        <p>${singleProduct.price}</p>
+        <p>{singleProduct.description || singleProduct.pro_dec}</p>
       </div>
-      <button>Buy</button>
+      <button type="button" className="btn">Add to cart</button>
     </div>
   )
 }
