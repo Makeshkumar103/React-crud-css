@@ -13,12 +13,14 @@ const Table = () => {
   const handleEdit = (user) => {
     dispatch(setDetails(user));
     dispatch(setEditIndex(user.id));
+    // console.log(user.id);
     navigate('/forminput');
   };
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       dispatch(deleteUser(id));
+      console.log(deleteUser(id));
     }
   };
 

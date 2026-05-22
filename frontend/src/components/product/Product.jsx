@@ -1,8 +1,8 @@
 import './product.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-// import { setDetails, setEditIndex } from '.../slices/productSlice';
-import { setDetails, setEditIndex } from '../../slices/userSlice'; 
+// import { setDetails, setEditIndex } from '../.productSlice./slices/productSlice';
+import { deleteProduct,setDetails, setEditIndex } from '../../slices/productSlice'; 
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -10,15 +10,24 @@ const Product = () => {
   const { products } = useSelector((state) => state.products);
 
   const handleEdit = (item) => {
-    dispatch(setDetails({
-      name: item.name,
-      price: item.price,
-      description: item.description || item.pro_dec || '',
-      id: item.id,
-    }));
+    // dispatch(setDetails({
+    //   name: item.name,
+    //   price: item.price,
+    //   description: item.description || item.pro_dec || '',
+    //   id: item.id,
+    // }));
+    dispatch(setDetails(item));
+    // console.log(item.id)
     dispatch(setEditIndex(item.id));
     navigate('/productsform');
   };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this user?')){
+      dispatch(deleteProduct(id));
+      // console.log(deleteProduct(id));
+    }
+  }
 
   return (
     <div className="product-card">
@@ -61,6 +70,7 @@ const Product = () => {
                   </button>
                   <button type="button"
                     className='delete-btn'
+                    onClick={() => handleDelete(item.id)}
                   >
                     Delete
                   </button>

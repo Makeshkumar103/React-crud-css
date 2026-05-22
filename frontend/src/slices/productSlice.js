@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// import { setEditIndex } from './userSlice';
 
 const API_BASE_URL = 'http://localhost:8000';
 
@@ -30,13 +29,25 @@ export const createProduct = createAsyncThunk(
 );
 
 export const updateProduct = createAsyncThunk(
-  'users/updateProduct',
+  'products/updateProduct',
   async ({ id, details }, { rejectWithValue }) => {
     try {
       const response = await axios.patch(`${API_BASE_URL}/products/${id}`, details);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Error updating product');
+    }
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+  async (id , { rejectWithValue }) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/products/${id}`);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Error deleting product');
     }
   }
 );
@@ -118,17 +129,23 @@ const productSlice = createSlice({
     builder.addCase(updateProduct.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
-    })
+    });
     
 
-
-
-
-
-
-
+    // Delete Product
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteProduct.fulfilled, (state, action) => {
+      state.loading = false;
+      state.products = state.products.filter((u) => u.id !== action.payload);
+    });
+    builder.addCase(deleteProduct.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
-
 
 });
 

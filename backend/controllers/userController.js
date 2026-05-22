@@ -109,6 +109,19 @@ const updateProduct = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const affectedRows = await userModel.deleteProduct(id);
+    if (affectedRows == 0) {
+      return res.status(404).json({ error: 'Product not found'});
+    }
+    return res.json({ message: 'Product deleted successfully' });
+  } catch (error) {
+    return res.status(500).json({ error: 'Could not delete product'});
+  }
+};
+
 //single product
 const singleProduct = async (req, res) => {
   try {
@@ -131,5 +144,7 @@ module.exports = {
   getProducts, 
   createProduct,
   updateProduct,
-  singleProduct
+  deleteProduct,
+  singleProduct,
+
 };

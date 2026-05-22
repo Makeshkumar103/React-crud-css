@@ -21,6 +21,7 @@ function App() {
   useEffect(() => {
     dispatch(fetchUsers());
     dispatch(fetchProductsAction());
+    console.log
   }, [dispatch]);
 
   return (

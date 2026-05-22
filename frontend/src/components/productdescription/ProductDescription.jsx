@@ -7,11 +7,11 @@ import { useSelector } from 'react-redux';
 const ProductDescription = () => {
     const {id} = useParams();
     const { products } = useSelector((state) => state.products);
-    console.log(products);
+    // console.log(products);
     const singleProduct = products.find(
     (item) => item.id === Number(id)
   );
-    console.log(singleProduct)
+    // console.log(singleProduct)
   if (!singleProduct) {
     return <p className="not-found">Product not found.</p>;
   }

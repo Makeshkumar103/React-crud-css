@@ -66,6 +66,13 @@ const updateProduct = async (id, { name, price, description }) => {
   return result.affectedRows;
 };
 
+const deleteProduct = async (id) => {
+  const connection = await pool.getConnection();
+  const [result] = await connection.query('DELETE FROM product WHERE id = ?', [id]);
+  connection.release();
+  return result.affectedRows;
+}
+
 //single product from query
 
 const singleProduct = async (id) => {
@@ -74,6 +81,7 @@ const singleProduct = async (id) => {
   connection.release();
   // return result;
   return result[0];
+  console.log(result.affectedRows);
 
 }
 
@@ -94,5 +102,6 @@ module.exports = {
   getAllProducts,
   createProduct,
   updateProduct,
+  deleteProduct,
   singleProduct
 };
