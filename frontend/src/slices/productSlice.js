@@ -54,7 +54,7 @@ export const deleteProduct = createAsyncThunk(
 
 const initialState = {
   products: [],
-  details: { name: '', price: '', description: '', id: null },
+  details: { name: '', price: '', description: '',image_url:'', id: null },
   editIndex: null,
   loading: false,
   error: null,
@@ -68,7 +68,7 @@ const productSlice = createSlice({
       state.details = action.payload;
     },
     resetDetails: (state) => {
-      state.details = { name: '', age: '', description: '', id: null };
+      state.details = { name: '', age: '', description: '', image_url:'', id: null };
       state.editIndex = null;
     },
     setEditIndex: (state, action) => {
@@ -103,7 +103,7 @@ const productSlice = createSlice({
     builder.addCase(createProduct.fulfilled, (state, action) => {
       state.loading = false;
       state.products.push(action.payload);
-      state.details = { name: '', price: '', description: '', id: null };
+      state.details = { name: '', price: '', description: '', image_url:'', id: null };
       state.editIndex = null;
     });
     builder.addCase(createProduct.rejected, (state, action) => {
@@ -123,7 +123,7 @@ const productSlice = createSlice({
       if (index!== -1) {
         state.products[index] = action.payload;
       }
-      state.details = { name: '', price:'', description:'', id: null };
+      state.details = { name: '', price:'', description:'', image_url:'', id: null };
       state.editIndex = null;
     });
     builder.addCase(updateProduct.rejected, (state, action) => {

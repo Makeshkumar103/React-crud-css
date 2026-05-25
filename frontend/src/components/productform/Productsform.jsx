@@ -8,6 +8,7 @@ const Productsform = () => {
   const dispatch = useDispatch();
 
   const { details, editIndex, loading } = useSelector((state) => state.products);
+  const isEditing = editIndex !== null && editIndex !== undefined;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,12 +18,12 @@ const Productsform = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!details.name || !details.price || !details.description) {
+    if (!details.name || !details.price || !details.description || !details.image_url) {
       alert('Please fill in all fields.');
       return;
     }
 
-    if (editIndex) {
+    if (isEditing) {
       await dispatch(updateProduct({ id: editIndex, details }));
     } else {
       await dispatch(createProduct(details));
@@ -36,13 +37,6 @@ const Productsform = () => {
     navigate('/product');
   };
 
-  // const handleImageUpload = (e) => {
-  //   e.target.file
-
-  // }
-
-
-
   return (
     <>
       <div className="form-container">
@@ -54,6 +48,13 @@ const Productsform = () => {
             name="name"
             placeholder="Product Name"
             value={details.name}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="image_url"
+            placeholder="Image URL"
+            value={details.image_url}
             onChange={handleChange}
           />
           <input
@@ -83,7 +84,7 @@ const Productsform = () => {
               Cancel
             </button>
             <button type='submit' className='btn' disabled={loading}>
-              {loading ? 'Processing...' : editIndex ? 'Update' : 'Submit'}
+              {loading ? 'Processing...' : isEditing ? 'Update' : 'Submit'}
             </button>
           </div>
         </form>

@@ -41,26 +41,26 @@ const deleteUser = async (id) => {
 
 const getAllProducts = async () => {
   const connection = await pool.getConnection();
-  const [rows] = await connection.query('SELECT id, name, price, pro_dec AS description FROM product');
+  const [rows] = await connection.query('SELECT id, name, price, pro_dec AS description, image_url FROM product');
   connection.release();
   return rows;
 };
 
-const createProduct = async ({ name, price, description }) => {
+const createProduct = async ({ name, price, description, image_url }) => {
   const connection = await pool.getConnection();
   const [result] = await connection.query(
-    'INSERT INTO product (name, price, pro_dec) VALUES (?, ?, ?)',
-    [name, price, description]
+    'INSERT INTO product (name, price, pro_dec, image_url) VALUES (?, ?, ?, ?)',
+    [name, price, description, image_url]
   );
   connection.release();
-  return { id: result.insertId, name, price, description };
+  return { id: result.insertId, name, price, description, image_url };
 };
 
-const updateProduct = async (id, { name, price, description }) => {
+const updateProduct = async (id, { name, price, description,image_url }) => {
   const connection = await pool.getConnection();
   const [result] = await connection.query(
-    'UPDATE product SET name = ?, price = ?, pro_dec = ? WHERE id = ?',
-    [name, price, description, id]
+    'UPDATE product SET name = ?, price = ?, pro_dec = ?, image_url = ? WHERE id = ?',
+    [name, price, description, image_url, id]
   );
   connection.release();
   return result.affectedRows;

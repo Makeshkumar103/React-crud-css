@@ -63,8 +63,8 @@ const deleteUser = async (req, res) => {
 
 //product crud logic
 
-const validateProductData = ({ name, price, description }) => {
-  if (!name || !price || !description) {
+const validateProductData = ({ name, price, description, image_url }) => {
+  if (!name || !price || !description || !image_url) {
     return 'Please fill in all fields';
   }
   return null;

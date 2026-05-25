@@ -36,6 +36,7 @@ id INT AUTO_INCREMENT PRIMARY KEY,
 name VARCHAR(30),
 price INT,
 pro_dec VARCHAR(200)
+image_url VARCHAR(500),
 );
 
 INSERT INTO product VALUES (
@@ -55,3 +56,18 @@ INSERT INTO product (name, price, pro_dec) VALUES
 ('Mouse Pad', 15, 'Large gaming mouse pad with stitched edges');
 
 SELECT * FROM product;
+
+
+
+
+use crud:
+CREATE TABLE IF NOT EXISTS users (
+id INT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(100) NOT NULL,
+email VARCHAR(255) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+select * from users;

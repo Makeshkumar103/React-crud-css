@@ -38,7 +38,7 @@ const Table = () => {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Age</th>
+                {/* <th>Age</th> */}
                 <th>Email</th>
                 <th>Actions</th>
               </tr>
@@ -47,7 +47,7 @@ const Table = () => {
               {users.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
-                  <td>{item.age}</td>
+                  {/* <td>{item.age}</td> */}
                   <td>{item.email}</td>
                    <td className="action-buttons">
                     <button
@@ -61,7 +61,7 @@ const Table = () => {
                       className='delete-btn'
                       onClick={() => handleDelete(item.id)}
                     >
-                      Delete
+                      Delete user
                     </button>
                   </td>
                 </tr>

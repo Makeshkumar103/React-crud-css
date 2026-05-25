@@ -47,12 +47,12 @@ const FormInput = () => {
             value={details.name}
             onChange={handleChange}
           />
-          <input
+          {/* <input
             name="age"
             placeholder="Age"
             value={details.age}
             onChange={handleChange}
-          />
+          /> */}
           <input
             name="email"
             placeholder="Email"
