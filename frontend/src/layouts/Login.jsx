@@ -10,7 +10,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token, status, error } = useSelector((state) => state.auth);
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/auth';
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/auth';
 
   const [isResetMode, setIsResetMode] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
@@ -74,11 +74,11 @@ function Login() {
           <form onSubmit={handleSubmit}>
             <label>
               Email
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </label>
             <label>
               Password
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <input type="password" autoComplete='current-password' value={password} onChange={(e) => setPassword(e.target.value)} required />
             </label>
             <button type="submit" disabled={status === 'loading'}>
               {status === 'loading' ? 'Logging in...' : 'Login'}

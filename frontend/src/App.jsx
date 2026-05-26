@@ -163,6 +163,13 @@ function App() {
               path="/product/:id"
               element={isAuthenticated ? <ProductDescription /> : <Navigate to="/login" replace />}
             />
+            <Route 
+              path='*'
+                element={<Navigate to={isAuthenticated ? "/profile" : "/login"} 
+                replace
+                />
+              }
+            />
 
           </Routes>
         </main>

@@ -8,7 +8,7 @@ const Productsform = () => {
   const dispatch = useDispatch();
 
   const { details, editIndex, loading } = useSelector((state) => state.products);
-  const isEditing = editIndex !== null && editIndex !== undefined;
+  // const isEditing = editIndex !== null && editIndex !== undefined;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +23,7 @@ const Productsform = () => {
       return;
     }
 
-    if (isEditing) {
+    if (editIndex) {
       await dispatch(updateProduct({ id: editIndex, details }));
     } else {
       await dispatch(createProduct(details));
@@ -84,7 +84,7 @@ const Productsform = () => {
               Cancel
             </button>
             <button type='submit' className='btn' disabled={loading}>
-              {loading ? 'Processing...' : isEditing ? 'Update' : 'Submit'}
+              {loading ? 'Processing...' : editIndex ? 'Update' : 'Submit'}
             </button>
           </div>
         </form>
